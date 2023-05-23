@@ -3,7 +3,7 @@ import { NextApiResponse } from "next";
 
 export const deleteComment = async (id: number, res: NextApiResponse) => {
   try {
-    const comment = await prisma.PostComent.delete({
+    const comment = await prisma.PostComment.delete({
       where: { id },
     });
     res.status(200).json({ message: "Se elimino el comentatio", comment });

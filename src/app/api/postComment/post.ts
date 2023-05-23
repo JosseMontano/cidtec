@@ -10,7 +10,7 @@ export const postComment = async (body: commentType, res: NextApiResponse) => {
   try {
     commentSchema.parse(body);
 
-    const comment = await prisma.PostComent.create({
+    const comment = await prisma.PostComment.create({
       data: {
         description,
         featured,

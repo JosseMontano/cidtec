@@ -16,7 +16,7 @@ model User {
   id         Int          @id @default(autoincrement())
   email      String       @db.VarChar(255)
   post       Post[]
-  PostComent PostComent[]
+  PostComent PostComment[]
 }
 
 // ================== POST =================
@@ -28,13 +28,13 @@ model Post {
   users       User         @relation(fields: [authorId], references: [id])
   authorId    Int
   //relation comment
-  PostComent  PostComent[]
+  PostComent  PostComment[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
 
 // ================== COMMENTS =================
-model PostComent {
+model PostComment {
   id          Int      @id @default(autoincrement())
   description String   @db.VarChar(255)
   featured    Boolean

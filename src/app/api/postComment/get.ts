@@ -6,7 +6,7 @@ export const getComments = async (id: number, res: NextApiResponse) => {
     const comments = await prisma.$queryRaw`
       SELECT pc.description, pc.featured, pc."postId", pc."authorId",
       us.id
-      FROM "PostComent" pc 
+      FROM "PostComment" pc 
       INNER JOIN "Post" p on p.id = pc."postId"
       INNER JOIN "User" us on us.id = p."authorId"
       where "postId"=${id}

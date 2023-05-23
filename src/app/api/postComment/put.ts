@@ -15,7 +15,7 @@ export const putComment = async (
   try {
     commentSchema.parse(body);
 
-    const post = await prisma.PostComent.update({
+    const post = await prisma.PostComment.update({
       where: {
         id,
       },
