@@ -13,18 +13,37 @@ datasource db {
 // ================== USER =================
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @db.VarChar(255)
-  post  Post?
+  id         Int          @id @default(autoincrement())
+  email      String       @db.VarChar(255)
+  post       Post[]
+  PostComent PostComent[]
 }
 
 // ================== POST =================
 model Post {
+  id          Int          @id @default(autoincrement())
+  title       String       @db.VarChar(255)
+  description String       @db.VarChar(255)
+  //relation user
+  users       User         @relation(fields: [authorId], references: [id])
+  authorId    Int
+  //relation comment
+  PostComent  PostComent[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+// ================== COMMENTS =================
+model PostComent {
   id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
   description String   @db.VarChar(255)
+  featured    Boolean
+  //relation post
+  posts       Post     @relation(fields: [postId], references: [id])
+  postId      Int
+  //relation user
   users       User     @relation(fields: [authorId], references: [id])
-  authorId    Int      @unique
+  authorId    Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

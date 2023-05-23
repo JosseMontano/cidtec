@@ -1,6 +1,5 @@
-import { getPosts } from "@/app/api/post/get";
-import { postPost } from "@/app/api/post/post";
 
+import { postComment } from "@/app/api/postComment/post";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -10,11 +9,8 @@ export default async function handler(
   const { method, body } = req;
 
   switch (method) {
-    case "GET":
-      await getPosts(res);
-      break;
     case "POST":
-      await postPost(body, res);
+      await postComment(body, res);
       break;
     default:
       return res.status(400).json("invalid method");
