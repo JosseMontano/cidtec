@@ -10,13 +10,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ================== USER =================
+// ================== ROLE =================
+model Role {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(255)
+  description String       @db.VarChar(255)
+  users       User[]
+}
 
+// ================== USER =================
 model User {
   id         Int          @id @default(autoincrement())
   email      String       @db.VarChar(255)
-  post       Post[]
+  role       Role         @relation(fields: [roleId], references: [id])
+  roleId     Int          
+  //relation for my own teams and other teams where I belong
+  myTeams    Team[]       @relation(name: "teacher")
+  teams      Team[]       @relation(name: "members")
+  //relation posts
+  posts      Post[]
   PostComent PostComment[]
+}
+
+// ================== TEAM =================
+model Team {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(255)
+  teacher     User         @relation(fields: [teacherId], references: [id], name: "teacher")
+  teacherId   Int          
+  members     User[]       @relation(name: "members")
 }
 
 // ================== POST =================
@@ -25,7 +47,7 @@ model Post {
   title       String       @db.VarChar(255)
   description String       @db.VarChar(255)
   //relation user
-  users       User         @relation(fields: [authorId], references: [id])
+  author      User         @relation(fields: [authorId], references: [id])
   authorId    Int
   //relation comment
   PostComent  PostComment[]
@@ -42,7 +64,7 @@ model PostComment {
   posts       Post     @relation(fields: [postId], references: [id])
   postId      Int
   //relation user
-  users       User     @relation(fields: [authorId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
   authorId    Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
