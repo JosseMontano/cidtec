@@ -1,8 +1,8 @@
-export default interface commentType {
+export default interface ProjectCommentsType {
   id: string;
   description: string;
   featured: boolean;
-  postId:number;
+  projectId:number;
   authorId:number;
   createdAt: string;
   updateAt: string;

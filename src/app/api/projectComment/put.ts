@@ -1,6 +1,5 @@
 import { NextApiResponse } from "next";
-import postI from "./helpers/interface";
-import { commentSchema } from "./helpers/validation";
+import { ProjectCommentsSchema } from "./helpers/validation";
 import { ZodError } from "zod";
 import { prisma } from "@/app/lib/prisma";
 import commentType from "./helpers/interface";
@@ -10,19 +9,19 @@ export const putComment = async (
   body: commentType,
   res: NextApiResponse
 ) => {
-  const { description, featured, postId, authorId } = body;
+  const { description, featured, authorId, projectId } = body;
 
   try {
-    commentSchema.parse(body);
+    ProjectCommentsSchema.parse(body);
 
-    const post = await prisma.postComment.update({
+    const post = await prisma.projectComment.update({
       where: {
         id,
       },
       data: {
         description,
         featured,
-        postId,
+        projectId,
         authorId,
       },
     });
