@@ -8,7 +8,7 @@ export const getPosts = async (res: NextApiResponse) => {
         id: true,
         title: true,
         description: true,
-        users: true,
+        author:true,
         authorId: true,
       },
     });
