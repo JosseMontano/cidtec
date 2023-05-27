@@ -2,7 +2,7 @@ import { NextApiResponse } from "next";
 import ProjectCommentsType from "./helpers/interface";
 import { ProjectCommentsSchema } from "./helpers/validation";
 import { ZodError } from "zod";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export const postComment = async (body: ProjectCommentsType, res: NextApiResponse) => {
   const { description, featured, authorId, projectId } = body;

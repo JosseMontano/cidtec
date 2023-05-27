@@ -2,7 +2,7 @@ import { NextApiResponse } from "next";
 import projectType from "./helpers/interface";
 import { projectSchema } from "./helpers/validation";
 import { ZodError } from "zod";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export const projectPost = async (body: projectType, res: NextApiResponse) => {
   const { description, title, bossId, teamId } = body;

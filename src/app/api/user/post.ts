@@ -1,7 +1,7 @@
 import { NextApiResponse } from "next";
 import { postSchema } from "./helpers/validation";
 import { ZodError } from "zod";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import User from "./helpers/interface";
 
 export const postUser = async (body: User, res: NextApiResponse) => {

@@ -2,7 +2,7 @@ import { NextApiResponse } from "next";
 import Role from "./helpers/interface";
 import { postSchema } from "./helpers/validation";
 import { ZodError } from "zod";
-import { prisma } from "@/app/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export const putRole = async (id: number, body: Role, res: NextApiResponse) => {
   const { description, name } = body;
