@@ -1,25 +1,30 @@
 import { NextApiResponse } from "next";
-import Role from "./helpers/interface";
 import { postSchema } from "./helpers/validation";
 import { ZodError } from "zod";
 import { prisma } from "@/app/lib/prisma";
+import User from "./helpers/interface";
 
-export const postRole = async (body: Role, res: NextApiResponse) => {
-  const { description, name } = body;
+export const putUser = async (id: number, body: User, res: NextApiResponse) => {
+  const { name, email, photo, roleId } = body;
 
   try {
     postSchema.parse(body);
 
-    const role = await prisma.role.create({
+    const user = await prisma.user.update({
+      where: {
+        id
+      },
       data: {
         name,
-        description,
+        email,
+        photo,
+        roleId
       },
     });
 
     res
       .status(200)
-      .json({ message: "El rol se creo satisfactoriamente", role });
+      .json({ message: "El usuario se actualizo satisfactoriamente", user });
   } catch (error) {
     if (error instanceof ZodError) {
       return res
