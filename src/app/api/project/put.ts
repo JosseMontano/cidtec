@@ -1,34 +1,33 @@
 import { NextApiResponse } from "next";
-import postI from "./helpers/interface";
-import { commentSchema } from "./helpers/validation";
+import projectType from "./helpers/interface";
+import { projectSchema } from "./helpers/validation";
 import { ZodError } from "zod";
 import { prisma } from "@/app/lib/prisma";
-import commentType from "./helpers/interface";
 
-export const putComment = async (
+export const putProject = async (
   id: number,
-  body: commentType,
+  body: projectType,
   res: NextApiResponse
 ) => {
-  const { description, featured, postId, authorId } = body;
+  const { description, title, bossId, teamId } = body;
 
   try {
-    commentSchema.parse(body);
+    projectSchema.parse(body);
 
-    const post = await prisma.postComment.update({
+    const post = await prisma.project.update({
       where: {
         id,
       },
       data: {
+        bossId,
         description,
-        featured,
-        postId,
-        authorId,
+        title,
+        teamId,
       },
     });
 
     res.status(200).json({
-      message: "El comentario fue actualizado",
+      message: "El proyecto se actualizo satisfactoriamente",
       post,
     });
   } catch (error) {

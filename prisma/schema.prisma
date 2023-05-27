@@ -12,9 +12,9 @@ datasource db {
 
 // ================== ROLE =================
 model Role {
-  id          Int          @id @default(autoincrement())
-  name        String       @db.VarChar(255)
-  description String       @db.VarChar(255)
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(255)
+  description String @db.VarChar(255)
   users       User[]
 }
 
@@ -31,6 +31,10 @@ model User {
   teams      UserTeam[]   
   //relation posts
   posts      Post[]
+  //relation project
+  projects   Project[]
+  //relation comments project
+  ProjectComment  ProjectComment[]
   PostComent PostComment[]
 }
 
@@ -41,6 +45,8 @@ model Team {
   teacher     User         @relation(fields: [teacherId], references: [id], name: "teacher")
   teacherId   Int          
   members     UserTeam[]   
+  //relation with project
+  projects  Project[]
 }
 
 // ================== USERTEAM ================
@@ -55,16 +61,16 @@ model UserTeam {
   
 // ================== POST =================
 model Post {
-  id          Int          @id @default(autoincrement())
-  title       String       @db.VarChar(255)
-  description String       @db.VarChar(255)
+  id          Int           @id @default(autoincrement())
+  title       String        @db.VarChar(255)
+  description String        @db.VarChar(255)
   //relation user
-  author      User         @relation(fields: [authorId], references: [id])
+  author      User          @relation(fields: [authorId], references: [id])
   authorId    Int
   //relation comment
   PostComent  PostComment[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 // ================== COMMENTS =================
@@ -75,6 +81,39 @@ model PostComment {
   //relation post
   posts       Post     @relation(fields: [postId], references: [id])
   postId      Int
+  //relation user
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  projectId   Int?
+}
+
+// ================== Project =================
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  title       String        @db.VarChar(255)
+  description String        @db.VarChar(255)
+  //relation user
+  boss        User          @relation(fields: [bossId], references: [id])
+  bossId      Int
+  //relation team
+  team        Team          @relation(fields: [teamId], references: [id])
+  teamId      Int
+   //relation comment
+  ProjectComments  ProjectComment[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ProjectComment {
+  id          Int      @id @default(autoincrement())
+  description String   @db.VarChar(255)
+  featured    Boolean
+  //relation post
+  projects       Project     @relation(fields: [projectId], references: [id])
+  projectId      Int
   //relation user
   author      User     @relation(fields: [authorId], references: [id])
   authorId    Int

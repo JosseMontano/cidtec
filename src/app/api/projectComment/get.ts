@@ -4,12 +4,12 @@ import { NextApiResponse } from "next";
 export const getComments = async (id: number, res: NextApiResponse) => {
   try {
     const comments = await prisma.$queryRaw`
-      SELECT pc.id,pc.description, pc.featured, pc."postId", pc."authorId",
+      SELECT pc.id, pc.description, pc.featured, pc."projectId", pc."authorId",
       us.email
-      FROM "PostComment" pc 
-      INNER JOIN "Post" p on p.id = pc."postId"
+      FROM "ProjectComment" pc 
+      INNER JOIN "Project" pro on pro.id = pc."projectId"
       INNER JOIN "User" us on us.id = pc."authorId"
-      where "postId"=${id}
+      where pc."projectId"=${id}
      `;
     return res.status(200).json(comments);
   } catch (error) {
