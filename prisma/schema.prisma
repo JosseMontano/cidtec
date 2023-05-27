@@ -21,12 +21,14 @@ model Role {
 // ================== USER =================
 model User {
   id         Int          @id @default(autoincrement())
-  email      String       @db.VarChar(255)
+  email      String       @unique @db.VarChar(255)
+  photo      String       @db.VarChar(255)
+  name       String       @db.VarChar(255)
   role       Role         @relation(fields: [roleId], references: [id])
   roleId     Int          
   //relation for my own teams and other teams where I belong
   myTeams    Team[]       @relation(name: "teacher")
-  teams      Team[]       @relation(name: "members")
+  teams      UserTeam[]   
   //relation posts
   posts      Post[]
   PostComent PostComment[]
@@ -38,9 +40,19 @@ model Team {
   name        String       @db.VarChar(255)
   teacher     User         @relation(fields: [teacherId], references: [id], name: "teacher")
   teacherId   Int          
-  members     User[]       @relation(name: "members")
+  members     UserTeam[]   
 }
 
+// ================== USERTEAM ================
+model UserTeam {
+  id          Int          @id @default(autoincrement())
+  user        User         @relation(fields: [userId], references: [id])
+  userId      Int
+  team        Team         @relation(fields: [teamId], references: [id])
+  teamId      Int
+  charge      String       @db.VarChar(255)
+}
+  
 // ================== POST =================
 model Post {
   id          Int          @id @default(autoincrement())
