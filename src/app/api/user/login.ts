@@ -7,26 +7,24 @@ export const login = async (body: User, res: NextApiResponse) => {
 
   const user = await prisma.user.findUnique({
     where: {
-      email
-    }
+      email,
+    },
   });
 
-  if(user) {
-    res
-      .status(200)
-      .json({ message: "Usuario encontrado", user });
-  } 
+  if (user) {
+    res.status(200).json({ message: "Usuario encontrado", data: user });
+  }
 
   const newUser = await prisma.user.create({
     data: {
-      name, 
+      name,
       email,
       photo,
-      roleId: 3
-    }
+      roleId: 1,
+    },
   });
 
   res
     .status(200)
-    .json({ message: "El usuario se creo satisfactoriamente", user: newUser });
+    .json({ message: "El usuario se creo satisfactoriamente", data: newUser });
 };
