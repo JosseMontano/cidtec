@@ -20,7 +20,7 @@ export const postPost = async (body: postI, res: NextApiResponse) => {
 
     res
       .status(200)
-      .json({ message: "La publicacion se creo satisfactoriamente", post });
+      .json({ message: "La publicacion se creo satisfactoriamente", data:post });
   } catch (error) {
     if (error instanceof ZodError) {
       return res

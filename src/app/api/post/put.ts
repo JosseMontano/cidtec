@@ -25,12 +25,10 @@ export const putPost = async (
       },
     });
 
-    res
-      .status(200)
-      .json({
-        message: "La publicacion se actualizo satisfactoriamente",
-        post,
-      });
+    res.status(200).json({
+      message: "La publicacion se actualizo satisfactoriamente",
+      data: post,
+    });
   } catch (error) {
     if (error instanceof ZodError) {
       return res

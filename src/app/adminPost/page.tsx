@@ -1,18 +1,21 @@
 "use client";
 
-import React from "react";
+
 import { useModal, Modal } from "@/hooks/global/useModal";
 import Usefetch from "@/hooks/global/usefetch";
 import { getPosts } from "@/services/adminPost/post";
 import { PostType } from "@/interfaces/adminPost/postType";
+import FormComponent from "@/components/adminPost/form";
 
 const AdminPost = () => {
   const { stateModal, toggle } = useModal();
 
-  const { data, loading, showMsgEmptyJSX, showLoading, empty } =
+  const { data, loading, showMsgEmptyJSX, showLoading, empty, addNewValue } =
     Usefetch<PostType>({
       services: getPosts,
     });
+
+  
 
   return (
     <div>
@@ -30,10 +33,11 @@ const AdminPost = () => {
       ))}
 
       <Modal
-        modalContent={<p>funciona</p>}
+        modalContent={<FormComponent addNewValue={addNewValue} />}
         stateModal={stateModal}
         toggle={toggle}
       />
+      
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import config from "@/config/keys";
 
+//T is what the front sends, R is what the back sends
 
 async function post<T, R>(
   url: string,

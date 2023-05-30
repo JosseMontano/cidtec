@@ -24,6 +24,10 @@ const Usefetch = <T,>({ services }: Params<T>) => {
     handleLoadData();
   }, [services]);
 
+  const addNewValue = (newData: T) => {
+    setData([...data, newData]);
+  };
+
   function showMsgEmptyJSX() {
     return <p>No hay datos</p>;
   }
@@ -38,6 +42,7 @@ const Usefetch = <T,>({ services }: Params<T>) => {
     empty,
     showMsgEmptyJSX,
     showLoading,
+    addNewValue
   };
 };
 
